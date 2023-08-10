@@ -18,11 +18,10 @@ function mapObject(formField){
     },{})
 }
 
-function FormSection({handleDataStore}) {
+function FormSection({getFormData}) {
     const [formState, setFormState] = useState(mapObject(formField))
     const formData = mapObjectToArray(formState)
-
-    console.log(formState);
+    
 
     const handleChange = (e) =>{
         setFormState({
@@ -41,7 +40,7 @@ function FormSection({handleDataStore}) {
              return preVal;
         }, {})
 
-        handleDataStore(values)
+        getFormData(values)
     }
 
 
@@ -78,7 +77,7 @@ function FormSection({handleDataStore}) {
 }
 
 FormSection.prototype = {
-    handleDataStore:PropTypes.func.isRequired
+    getFormData:PropTypes.func.isRequired
 }
 
 export default FormSection;

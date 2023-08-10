@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import FormSection from './components/form/formSection'
+import Table from './components/table/table'
 
 function App() {
-  const [data, setData] = useState({})
+  const [formData, setFormData] = useState([])
 
-  const handleDataStore =(data)=>{
-      setData(data)
-      console.log(data);
+  const getFormData =(data)=>{
+    setFormData([].concat(data, formData))
   }
 
   return (
     <div style={{width:'70%', margin:'50px auto', backgroundColor:'#ddd', padding:'30px' }}>
-      <FormSection handleDataStore={handleDataStore} />
+      <FormSection getFormData={getFormData} />
+      <Table data={formData} />
     </div>
   )
 }
