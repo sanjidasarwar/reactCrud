@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
-function Table({data}) {
+function Table({data, handleDelete}) {
     return ( 
         <table border="1">
             <thead>
@@ -10,10 +12,14 @@ function Table({data}) {
                     <th>Email</th>
                     <th>Password</th>
                     <th>Phone</th>
-                    <th>country</th>
+                    <th>Country</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                {
+                    console.log(data)
+                }
                     {data.map((item, index) =>(
                         <tr key={index}>
                             <td>{item.name}</td>
@@ -21,6 +27,10 @@ function Table({data}) {
                             <td>{item.password}</td>
                             <td>{item.phone}</td>
                             <td>{item.country}</td>
+                            <td>
+                               <FontAwesomeIcon icon={faPencil} />
+                               <FontAwesomeIcon icon={faXmark} onClick={()=>handleDelete(item.id)}/>
+                            </td>
                         </tr>
                     ))}
             </tbody>
@@ -29,7 +39,8 @@ function Table({data}) {
 }
 
 Table.prototype = {
-    data:PropTypes.array.isRequired
+    data:PropTypes.array.isRequired,
+    handleDelete:PropTypes.func.isRequired
 }
 
 export default Table;

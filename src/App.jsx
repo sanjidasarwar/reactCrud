@@ -9,10 +9,20 @@ function App() {
     setFormData([].concat(data, formData))
   }
 
+  const handleDelete =(id) =>{
+    let newFormData= formData.filter(data => data.id !== id)
+    setFormData(newFormData)
+  }
+
   return (
     <div style={{width:'70%', margin:'50px auto', backgroundColor:'#ddd', padding:'30px' }}>
       <FormSection getFormData={getFormData} />
-      <Table data={formData} />
+      {/* <div>
+        <label>Filter:</label>
+        <input type="text" name="" id="" value="" onChange={handleFilter} />
+      </div> */}
+      
+      <Table data={formData} handleDelete ={handleDelete}/>
     </div>
   )
 }

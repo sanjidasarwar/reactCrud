@@ -2,6 +2,7 @@ import InputField from "./InputField";
 import { formField } from "../../../data/data";
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import shortid from "shortid";
 
 
 function mapObjectToArray (formField){
@@ -40,6 +41,7 @@ function FormSection({getFormData}) {
              return preVal;
         }, {})
 
+        values.id=shortid.generate(),
         getFormData(values)
     }
 
