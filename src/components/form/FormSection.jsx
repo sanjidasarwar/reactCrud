@@ -1,6 +1,6 @@
 import InputField from "./InputField";
 import { formField } from "../../../data/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import shortid from "shortid";
 
@@ -19,10 +19,25 @@ function mapObject(formField){
     },{})
 }
 
-function FormSection({getFormData}) {
+function FormSection({getFormData, editData, isEditing, handleEditSubmit}) {
+
     const [formState, setFormState] = useState(mapObject(formField))
     const formData = mapObjectToArray(formState)
     
+    useEffect(()=>{
+        if (isEditing && editData) {
+            const updatedFormState = mapObject(formField);
+      
+            for (const key in editData) {
+              if (updatedFormState.hasOwnProperty(key)) {
+                updatedFormState[key].value = editData[key];
+              }
+            }
+      
+            setFormState(updatedFormState);
+          }
+
+    },[editData, isEditing])
 
     const handleChange = (e) =>{
         setFormState({
@@ -41,8 +56,19 @@ function FormSection({getFormData}) {
              return preVal;
         }, {})
 
-        values.id=shortid.generate(),
-        getFormData(values)
+
+
+        if (isEditing && editData) {
+            console.log(editData);
+            console.log(values);
+             // Update the existing editData with new values
+            const updatedEditData = { ...editData, ...values };
+            handleEditSubmit(updatedEditData);
+        } else {
+            values.id = shortid.generate();
+            getFormData(values);
+        }
+        setFormState(mapObject(formField))
     }
 
 
@@ -79,7 +105,10 @@ function FormSection({getFormData}) {
 }
 
 FormSection.prototype = {
-    getFormData:PropTypes.func.isRequired
+    getFormData:PropTypes.func.isRequired,
+    handleEditSubmit:PropTypes.func.isRequired,
+    editData:PropTypes.object.isRequired,
+    isEditing:PropTypes.bool.isRequired,
 }
 
 export default FormSection;

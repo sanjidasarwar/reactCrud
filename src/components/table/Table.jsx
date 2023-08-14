@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
-function Table({data, handleDelete}) {
+function Table({data, handleDelete, handleEdit}) {
     return ( 
-        <table border="1">
+            <table border="1">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -17,9 +17,6 @@ function Table({data, handleDelete}) {
                 </tr>
             </thead>
             <tbody>
-                {
-                    console.log(data)
-                }
                     {data.map((item, index) =>(
                         <tr key={index}>
                             <td>{item.name}</td>
@@ -28,7 +25,7 @@ function Table({data, handleDelete}) {
                             <td>{item.phone}</td>
                             <td>{item.country}</td>
                             <td>
-                               <FontAwesomeIcon icon={faPencil} />
+                               <FontAwesomeIcon icon={faPencil} onClick={()=>handleEdit(item)} />
                                <FontAwesomeIcon icon={faXmark} onClick={()=>handleDelete(item.id)}/>
                             </td>
                         </tr>
@@ -40,7 +37,8 @@ function Table({data, handleDelete}) {
 
 Table.prototype = {
     data:PropTypes.array.isRequired,
-    handleDelete:PropTypes.func.isRequired
+    handleDelete:PropTypes.func.isRequired,
+    handleEdit:PropTypes.func.isRequired,
 }
 
 export default Table;
